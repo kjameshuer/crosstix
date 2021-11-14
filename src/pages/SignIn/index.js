@@ -21,7 +21,6 @@ const SignIn = () => {
     }
 
     const hanldePasswordChange = e => {
-        console.log(e.target.value)
         updatePassword(e.target.value)
     }
 
