@@ -1,0 +1,16 @@
+.ProjectColors__color{
+    height: 30px;
+    width: 30px;
+    margin-right: 2px;
+ 
+}
+
+.ProjectColor__colors{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.ProjectColors__color--selected{
+    border: 1px dotted gainsboro
+}

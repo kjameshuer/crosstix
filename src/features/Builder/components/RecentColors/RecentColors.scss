@@ -1,0 +1,17 @@
+.RecentColors{
+  
+}
+
+.RecentColors__colors{
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;    
+    justify-content: flex-start;
+
+}
+
+.RecentColors__color{
+    height: 30px;
+    width: 30px;
+    margin-right: 2px;
+}
