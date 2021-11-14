@@ -9,10 +9,8 @@ const Header = () => {
     const dispatch = useDispatch()
     const { isLoggedIn } = useSelector(state => state.authInfo);
     const loggedInText = isLoggedIn ? 'Logout' : 'Login';
-    console.log("isLoggedIn", isLoggedIn)
 
     const handleIsLoggedIn = () => {
-        console.log("handle is logged in")
         localStorage.removeItem("crosstixToken");
         dispatch(logUserOut())
         return <Redirect to="/" />
