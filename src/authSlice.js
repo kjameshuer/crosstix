@@ -1,12 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-
+import { useHistory } from 'react-router-dom';
 const numOfColRows = 50;
 const token = localStorage.getItem('crosstixToken');
 const initialState = {
   isLoggedIn: (token) ? true : false,
   token: token
 };
+
 
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
