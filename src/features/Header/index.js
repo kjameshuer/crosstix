@@ -3,10 +3,11 @@ import logo from 'images/logo-wide.svg'
 import { logUserOut } from "authSlice";
 import './Header.scss';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 
 const Header = () => {
     const dispatch = useDispatch()
+    const history = useHistory();
     const { isLoggedIn } = useSelector(state => state.authInfo);
     const loggedInText = isLoggedIn ? 'Logout' : 'Login';
     console.log("isLoggedIn", isLoggedIn)
@@ -15,10 +16,11 @@ const Header = () => {
         console.log("handle is logged in")
         localStorage.removeItem("crosstixToken");
         dispatch(logUserOut())
-        return <Redirect to="/" />
+        history.push("/")
+        // return <Redirect to={{ pathname: '/' }} />
     }
     const handleIsLoggedOut = () => {
-        return <Redirect to="/signin" />
+        history.push("/signin")
     }
     return (
         <div className="Header">

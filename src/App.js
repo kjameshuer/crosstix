@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Builder from './features/Builder'
 import Home from 'pages/Home';
 import SignIn from 'pages/SignIn';
+import Dashboard from 'pages/Dashboard';
 import './App.scss';
 import Header from 'features/Header';
 import PrivateRoute from 'app/PrivateRoute';
@@ -24,6 +25,7 @@ function App() {
       <Router>
         <Header />
         <Switch>
+          <PrivateRoute path="/dashboard" component={Dashboard} />
           <PrivateRoute path="/builder" component={Builder} />
           <Route path="/signin">
             <SignIn />
