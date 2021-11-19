@@ -1,0 +1,15 @@
+.ProjectTile {
+  width: 200px;
+  height: 230px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid gainsboro;
+  border-radius: 1rem;
+  margin: 0.5rem;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  .ProjectTile__title {
+  }
+}

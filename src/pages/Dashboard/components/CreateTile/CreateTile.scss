@@ -1,0 +1,33 @@
+.CreateTile {
+  width: 229px;
+  height: 244px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 4px dashed gainsboro;
+  border-radius: 1rem;
+  margin: 0.5rem;
+}
+.CreateTile__add {
+  border: 2px dashed gainsboro;
+  border-radius: 0.3em;
+  font-size: 4em;
+  width: 1.3em;
+  color: gray;
+  cursor: pointer;
+}
+.CreateTile__title {
+  color: #5a5a5a;
+}
+
+.CreateTile__input {
+  border: none;
+  text-align: center;
+  margin-bottom: 1em;
+  font-family: sans-serif;
+  font-size: 1.1em;
+  max-width: 90%;
+  height: 60px;
+  font-weight: 700;
+}

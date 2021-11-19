@@ -26,6 +26,8 @@ const Header = () => {
             <button onClick={isLoggedIn ? handleIsLoggedIn : handleIsLoggedOut}>
                 {loggedInText}
             </button>
+            {isLoggedIn && <Link to="/profile">My profile</Link>}
+            {isLoggedIn && <Link to="/dashboard">My dashboard</Link>}
         </div>
     )
 }

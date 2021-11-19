@@ -2,12 +2,12 @@ import { createSlice } from '@reduxjs/toolkit';
 import { setupGrid } from 'app/helpers';
 const numOfColRows = 50;
 const initialState = {
-    grid: setupGrid(numOfColRows,numOfColRows),
-    columns: numOfColRows,
-    rows: numOfColRows,
-    history: [],
-    historyPosition: -1,
-    isMouseDown: false
+  grid: setupGrid(numOfColRows, numOfColRows),
+  columns: numOfColRows,
+  rows: numOfColRows,
+  history: [],
+  historyPosition: -1,
+  isMouseDown: false
 };
 
 // The function below is called a thunk and allows us to perform async logic. It
@@ -30,30 +30,30 @@ export const gridSlice = createSlice({
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
     updateGrid: (state, action) => {
-        const {column, row, color} = action.payload
+      const { column, row, color } = action.payload
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
-     // state.grid[`${action.payload.column}${action.payload.row}`] = action.payload.color;
-      state.grid[`${column}${row}`].color = color 
+      // state.grid[`${action.payload.column}${action.payload.row}`] = action.payload.color;
+      state.grid[`${column}${row}`].color = color
     },
-    updateHistory:(state, action) => {
-        state.history.push(action.payload);
-        state.historyPosition++;
+    updateHistory: (state, action) => {
+      state.history.push(action.payload);
+      state.historyPosition++;
     },
     toggleIsMouseDown: (state, action) => {
       state.isMouseDown = action.payload
     },
-    undoHistory:(state, action) => {
-        const {column, row, color} = state.history[state.historyPosition].before;
-        state.grid[`${column}${row}`].color = color;
-        state.historyPosition--;
+    undoHistory: (state, action) => {
+      const { column, row, color } = state.history[state.historyPosition].before;
+      state.grid[`${column}${row}`].color = color;
+      state.historyPosition--;
     },
-    redoHistory:(state, _action) => {      
+    redoHistory: (state, _action) => {
       state.historyPosition++;
-      const {column, row, color} = state.history[state.historyPosition].after;
-      state.grid[`${column}${row}`].color = color 
+      const { column, row, color } = state.history[state.historyPosition].after;
+      state.grid[`${column}${row}`].color = color
     },
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -61,13 +61,13 @@ export const gridSlice = createSlice({
   extraReducers: {},
 });
 
- export const { updateGrid, updateHistory, toggleIsMouseDown, undoHistory, redoHistory } = gridSlice.actions;
+export const { updateGrid, updateHistory, toggleIsMouseDown, undoHistory, redoHistory } = gridSlice.actions;
 
 // // The function below is called a selector and allows us to select a value from
 // // the state. Selectors can also be defined inline where they're used instead of
 // // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 // export const selectCount = (state) => state.counter.value;
-
+//export const gridState = (state) => state.grid;
 // // We can also write thunks by hand, which may contain both sync and async logic.
 // // Here's an example of conditionally dispatching actions based on current state.
 // export const incrementIfOdd = (amount) => (dispatch, getState) => {

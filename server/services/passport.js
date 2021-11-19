@@ -20,7 +20,12 @@ const localLogin = new LocalStrategy(localOptions, function (email, password, do
 });
 
 const jwtOptions = {
+    // makes postman work
+    // jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+
+    // makes website work
     jwtFromRequest: ExtractJwt.fromHeader('authorization'),
+
     secretOrKey: config.jwtSecret
 }
 

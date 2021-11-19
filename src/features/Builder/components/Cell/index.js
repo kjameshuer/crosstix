@@ -51,8 +51,11 @@ const Cell = ({ color, column, row, keyForCell }) => {
     const gridFill = (grid.hasOwnProperty(`${column}${row}`)) ? grid[`${column}${row}`].color : '#ffffff'
 
     const style = { backgroundColor: gridFill }
+    const fontStyle = { color: gridFill }
     return (
-        <div key={keyForCell} className="Cell" style={style} onMouseDown={handleClick} onMouseEnter={() => handleMouseEnter(column, row, selectedColor)} />
+        <div key={keyForCell} style={style} className="Cell" onMouseDown={handleClick} onMouseEnter={() => handleMouseEnter(column, row, selectedColor)}>
+            {/* <span style={fontStyle} className="Cell__x">x</span> */}
+        </div>
     )
 }
 
