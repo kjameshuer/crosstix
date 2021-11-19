@@ -5,8 +5,8 @@ const projectSchema = new Schema({
     userId: String, // mongoose.ObjectId
     title: String,
     thumbnailUrl: { type: String, default: '' },
-    projectColours: { type: [String], default: [] },
-    colours: {},
+    projectColors: { type: [String], default: [] },
+    colors: {},
     recentDate: { type: Date, default: Date.now },
     createdDate: { type: Date, default: Date.now }
 });

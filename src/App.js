@@ -26,7 +26,7 @@ function App() {
         <Header />
         <Switch>
           <PrivateRoute path="/dashboard" component={Dashboard} />
-          <PrivateRoute path="/builder" component={Builder} />
+          <PrivateRoute path="/builder/:id" component={Builder} />
           <Route path="/signin">
             <SignIn />
           </Route>

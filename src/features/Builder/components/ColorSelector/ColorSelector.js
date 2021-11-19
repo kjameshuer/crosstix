@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { HexColorPicker, HexColorInput } from "react-colorful";
-import { useDispatch , useSelector} from 'react-redux';
-import { setSelectedColor, addToProjectColors, updateRecentColors } from './colorSelectorSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateRecentColors, setSelectedColor } from './colorSelectorSlice';
+import { addToProjectColors } from 'projectSlice'
 
 const ColorSelector = () => {
 
-   const {selectedColor} = useSelector(state=>state.colorInfo);
+    const { selectedColor } = useSelector(state => state.colorInfo);
 
     const dispatch = useDispatch();
 
@@ -19,11 +20,11 @@ const ColorSelector = () => {
     }
 
     return (
-        <div className="ColorSelector">            
-             <HexColorPicker color={selectedColor} onChange={handleChange} />
-             <HexColorInput color={selectedColor} onChange={handleChange} />
-             <br />
-             <button onClick={handleClick}>Add current color to Project Colors</button>            
+        <div className="ColorSelector">
+            <HexColorPicker color={selectedColor} onChange={handleChange} />
+            <HexColorInput color={selectedColor} onChange={handleChange} />
+            <br />
+            <button onClick={handleClick}>Add current color to Project Colors</button>
         </div>
     )
 }

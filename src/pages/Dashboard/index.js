@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import ProjectList from './components/ProjectList';
+import ProjectList from './components/ProjectList/';
+import './Dashboard.scss'
 
 const Dashboard = () => {
 
