@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSelectedColor, removeProjectColor } from 'features/Builder/components/ColorSelector/colorSelectorSlice';
+import { setSelectedColor } from 'features/Builder/components/ColorSelector/colorSelectorSlice';
+import { removeProjectColor, addToProjectColors } from 'projectSlice';
 import './ProjectColors.scss'
 
 const ProjectColors = () => {
@@ -8,6 +9,7 @@ const ProjectColors = () => {
     const [isSelected, setIsSelected] = useState(null)
 
     const dispatch = useDispatch()
+    const { selectedColor } = useSelector(state => state.colorInfo);
     const { projectColors } = useSelector(state => state.projectsInfo.activeProject);
     const { selectedTool } = useSelector(state => state.gridTools);
 
@@ -20,7 +22,9 @@ const ProjectColors = () => {
             dispatch(removeProjectColor(itt))
         }
     }
-
+    const handleAddClick = () => {
+        dispatch(addToProjectColors(selectedColor));
+    }
 
 
     const displayProjectColors = () => {
@@ -34,7 +38,7 @@ const ProjectColors = () => {
 
             return (
                 <div
-                    key={`${color}`}
+                    key={`${color}-${Date.now()}-${Math.random()*300}`}
                     className={theClassName}
                     style={style}
                     onClick={() => handleOnClick(color, itt)}
@@ -48,6 +52,7 @@ const ProjectColors = () => {
             <h3>Project Colors</h3>
             <div className="ProjectColor__colors">
                 {displayProjectColors()}
+                <button title="Add current color to Project Colors" onClick={handleAddClick}>+</button>
             </div>
         </div>
     )
