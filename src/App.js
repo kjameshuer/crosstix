@@ -11,6 +11,7 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import Profile from 'pages/Profile';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Switch>
           <PrivateRoute path="/dashboard" component={Dashboard} />
           <PrivateRoute path="/builder/:id" component={Builder} />
+          <PrivateRoute path="/profile" component={Profile} />
           <Route path="/signin">
             <SignIn />
           </Route>

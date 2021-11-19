@@ -86,6 +86,7 @@ export const projectSlice = createSlice({
         // }
         clearActiveProject: (state) => {
             state.activeProject = null;
+            state.hasActiveProject = false;
         },
         addToProjectColors: (state, action) => {
             const newList = (state.activeProject.projectColors.length > 9) ? state.activeProject.projectColors.slice(1) : state.projectColors;

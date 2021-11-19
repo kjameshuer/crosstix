@@ -11,23 +11,19 @@ import ColorSelector from './components/ColorSelector/ColorSelector';
 import './Builder.scss';
 
 const Builder = props => {
-
-  useEffect(() => {
-    const projectId = props.match.params.id;
-    dispatch(getProject(projectId))
-    return function cleanup() {
-      console.log("cleaning up")
-      dispatch(clearActiveProject);
-    }
-  }, [])
-
-
+  const projectId = props.match.params.id;
   const dispatch = useDispatch();
   const projectsInfo = useSelector(state => state.projectsInfo)
-
   const [mousePosition, updateMousePosition] = useState(['A', '1'])
   const [toolModalIsOpen, setToolModalIsOpen] = useState(true)
   const [historyPosition, setHistoryPosition] = useState(0);
+
+  useEffect(() => {
+    dispatch(getProject(projectId))
+
+  }, [projectsInfo.hasActiveProject])
+
+
   const handleToolToggleClick = () => {
     setToolModalIsOpen(!toolModalIsOpen);
   }
@@ -40,23 +36,25 @@ const Builder = props => {
     const { title } = projectsInfo;
     return (
       <>
-        <div className="Builder__work-area">
-          <h3>{title}</h3>
-          <GridContainer />
-        </div>
-        <div className={(toolModalIsOpen) ? `Builder__tool-area Builder__tool-area--open` : `Builder__tool-area`}>
-          <div className="Builder__tool-container">
-            <GridTools />
-            <ColorSelector />
-            <ProjectColors />
-            <RecentColors />
-            <Undo />
-            <Redo />
-            <h4>{`${mousePosition[0]}${mousePosition[1]}`}</h4>
-            <div onClick={handleToolToggleClick} className="Builder__tool_toggle">{(toolModalIsOpen) ? '>' : '<'}</div>
-            <button onClick={handleSave}>Save</button>
+        {projectsInfo.hasActiveProject && <>
+          <div className="Builder__work-area">
+            <h3>{title}</h3>
+            <GridContainer />
           </div>
-        </div></>
+          <div className={(toolModalIsOpen) ? `Builder__tool-area Builder__tool-area--open` : `Builder__tool-area`}>
+            <div className="Builder__tool-container">
+              <GridTools />
+              <ColorSelector />
+              <ProjectColors />
+              <RecentColors />
+              <Undo />
+              <Redo />
+              <h4>{`${mousePosition[0]}${mousePosition[1]}`}</h4>
+              <div onClick={handleToolToggleClick} className="Builder__tool_toggle">{(toolModalIsOpen) ? '>' : '<'}</div>
+              <button onClick={handleSave}>Save</button>
+            </div>
+          </div></>}
+      </>
     )
   }
 
