@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addToProjectColors } from 'features/Builder/components/ColorSelector/colorSelectorSlice';
+import { addToProjectColors } from 'projectSlice';
 import './RecentColors.scss';
 
 const RecentColors = () => {

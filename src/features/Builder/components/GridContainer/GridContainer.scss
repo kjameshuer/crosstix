@@ -3,8 +3,8 @@
 }
 .GridContainer{
     display: grid;
-    grid-template-columns: repeat(50, 45px);
-    grid-template-rows: repeat(50, 40px);
+    grid-template-columns: repeat(50, 20px);
+    grid-template-rows: repeat(50, 15px);
     column-gap: 10px;
     row-gap: 15px;
     
