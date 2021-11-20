@@ -1,0 +1,54 @@
+.ColorSelector{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.ColorSelector__picker{
+  
+   
+}
+.ColorSelector__current-color{
+    height: 80px;
+    width: 100px;
+    margin-right: 2px;
+    border-radius: 5px;
+    margin-top: 2px;
+    border: 1px dashed #545050;
+    margin-bottom: 1em;
+    cursor: pointer;
+}
+.ColorSelector__display{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 1em;
+    width: 110px;
+    input{
+        text-align: center;
+        font-family: helvetica;
+        font-size: 1.2em;
+        width: 88%;
+        border-radius: 5px;
+        border: 1px solid gainsboro;
+
+        &:focus{
+            border: 1px solid gainsboro;
+        }
+    }
+}
+.react-colorful {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 300px !important;
+    height: 150px !important;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: default;
+}

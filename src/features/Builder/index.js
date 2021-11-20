@@ -37,21 +37,25 @@ const Builder = props => {
     return (
       <>
         {projectsInfo.hasActiveProject && <>
+          <div className="Builder__header">
+              <h3>{title}</h3>
+              <GridTools />
+              <div>
+              <Undo />
+              <Redo />
+              </div>
+              <button onClick={handleSave}>Save</button>
+              
+            </div>           
           <div className="Builder__work-area">
-            <h3>{title}</h3>
+          
             <GridContainer />
           </div>
           <div className={(toolModalIsOpen) ? `Builder__tool-area Builder__tool-area--open` : `Builder__tool-area`}>
-            <div className="Builder__tool-container">
-              <GridTools />
-              <ColorSelector />
+            <div className="Builder__tool-container"> 
               <ProjectColors />
-              <RecentColors />
-              <Undo />
-              <Redo />
-              <h4>{`${mousePosition[0]}${mousePosition[1]}`}</h4>
-              <div onClick={handleToolToggleClick} className="Builder__tool_toggle">{(toolModalIsOpen) ? '>' : '<'}</div>
-              <button onClick={handleSave}>Save</button>
+              <ColorSelector />
+              <RecentColors />                    
             </div>
           </div></>}
       </>

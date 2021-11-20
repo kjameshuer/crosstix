@@ -21,6 +21,6 @@ export const colorSelectorSlice = createSlice({
     }
 })
 
-export const { setSelectedColor, addToProjectColors, removeProjectColor, updateRecentColors } = colorSelectorSlice.actions
+export const { setSelectedColor, updateRecentColors } = colorSelectorSlice.actions
 
 export default colorSelectorSlice.reducer
