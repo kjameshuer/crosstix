@@ -64,7 +64,7 @@ export const saveProject = createAsyncThunk(
         const updatedProject = {
             ...projectsInfo.activeProject,
             projectColors: projectsInfo.projectColors,
-            //grid: JSON.stringify(gridInfo.grid)
+            grid: JSON.stringify(gridInfo.grid)
         }
         const response = await axios.post('/api/project/save',
             updatedProject,

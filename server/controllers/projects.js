@@ -1,4 +1,5 @@
 const Project = require('../models/project');
+const GridRow = require('../models/gridRow');
 
 exports.newProject = function (req, res, next) {
     const project = new Project();
@@ -34,12 +35,38 @@ exports.getProject = function (req, res, next) {
 }
 
 exports.saveProject = function (req, res, next) {
-    console.log("request", req)
+    console.log("request", req.body)
     const projectColors = req.body.projectColors;
     Project.findOneAndUpdate({ _id: req.body._id }, { projectColors: projectColors }, null, function (err, project) {
         if (err) { return next(err) }
         return res.status(200).send(project);
     })
+
+    // const grid = req.body.grid;
+    // const cols = req.body.cols;
+    // const rows = req.body.rows;
+
+    // for(let row = 1; row < rows; row++) {
+    //     let columnLetter = '';
+    //     if (col + baseNumberLetter > 90) {
+    //         // double letter
+    //         const firstLetter = String.fromCharCode((col / 26) - 1 + baseNumberLetter) 
+    //         const secondLetter = String.fromCharCode((col % 26) + baseNumberLetter)
+    //         columnLetter = `${firstLetter}${secondLetter}`;
+    //     } else {
+    //         // single letter
+    //         columnLetter = String.fromCharCode(col + baseNumberLetter);
+    //     }
+        
+    //     const key = `${columnLetter}${row}`
+    //     griddy[key] = {
+    //         color: cellColor,
+    //         column: columnLetter,
+    //         row
+    //     }
+    // }
+
+    // GridRow
 }
 
 //get project/s
