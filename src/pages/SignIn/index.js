@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { signUserIn } from 'authSlice';
+import { signUserIn } from 'app/slices/authSlice';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import './SignIn.scss';
@@ -17,7 +17,7 @@ const SignIn = () => {
         if (isLoggedIn) {
             history.push('/dashboard')
         }
-    }, [isLoggedIn])
+    }, [isLoggedIn, history])
 
     const handleButton = () => {
         dispatch(signUserIn({ email: email, password: password }))

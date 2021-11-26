@@ -1,9 +1,9 @@
 import React from "react";
 import logo from 'images/logo-wide.svg'
-import { logUserOut } from "authSlice";
+import { logUserOut } from "app/slices/authSlice";
 import './Header.scss';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const Header = () => {
     const dispatch = useDispatch()
@@ -22,7 +22,7 @@ const Header = () => {
     }
     return (
         <div className="Header">
-            <img className="Header__logo" src={logo} />
+            <img className="Header__logo" src={logo} alt={`Crosstix logo`} />
             <button onClick={isLoggedIn ? handleIsLoggedIn : handleIsLoggedOut}>
                 {loggedInText}
             </button>

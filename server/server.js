@@ -20,7 +20,7 @@ router(app);
 const port = process.env.PORT || 3001;
 const server = http.createServer(app)
 server.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`App listening at http://localhost:${port}`)
 })
 
 

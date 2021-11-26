@@ -1,10 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { useDispatch } from 'react-redux';
-
-import { setGrid } from 'features/Builder/components/GridContainer/gridSlice'
-
+import { setGrid } from 'app/slices/gridSlice'
 import axios from 'axios';
-import _ from 'underscore';
 
 const initialState = {
     projects: [],
@@ -27,14 +23,12 @@ export const getProjects = createAsyncThunk(
                 'Authorization': localStorage.getItem('crosstixToken')
             }
         })
-        console.log("response", response.data)
         return response.data;
     }
 )
 export const getProject = createAsyncThunk(
     'projects/getOne',
     async (id, thunkAPI) => {
-        console.log("Sending id", id)
         const response = await axios.get('/api/project', {
             params: {
                 projectId: id
@@ -43,7 +37,6 @@ export const getProject = createAsyncThunk(
                 'Authorization': localStorage.getItem('crosstixToken')
             }
         })
-        console.log("get one project", response);
         thunkAPI.dispatch(setGrid(response.data.gridData))
         return response.data
     }
@@ -59,7 +52,6 @@ export const newProject = createAsyncThunk(
                 }
 
             })
-        console.log("new project response", response.data)
         return response.data;
     }
 )
@@ -146,7 +138,6 @@ export const projectSlice = createSlice({
             //    state.activeProject = action.payload;
         })
         builder.addCase(deleteProject.fulfilled, (state, action) => { 
-            console.log('still happenin')   
             const newProjectsList = state.projects.filter(project => {
              return project._id !== action.payload.id;
             })

@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSelectedColor } from 'features/Builder/components/ColorSelector/colorSelectorSlice';
-import { removeProjectColor, addToProjectColors } from 'projectSlice';
+import { setSelectedColor } from 'app/slices/colorSelectorSlice';
+import { removeProjectColor, addToProjectColors } from 'app/slices/projectSlice';
 import './ProjectColors.scss'
 
 const ProjectColors = () => {
-
-    const [isSelected, setIsSelected] = useState(null)
 
     const dispatch = useDispatch()
     const { selectedColor } = useSelector(state => state.colorInfo);
@@ -14,7 +12,6 @@ const ProjectColors = () => {
     const { selectedTool } = useSelector(state => state.gridTools);
 
     const handleOnClick = (color, itt) => {
-        //setIsSelected(itt)
         if (selectedTool === "Write") {
             dispatch(setSelectedColor(color))
         }
@@ -22,10 +19,10 @@ const ProjectColors = () => {
             dispatch(removeProjectColor(itt))
         }
     }
+
     const handleAddClick = () => {
         dispatch(addToProjectColors(selectedColor));
     }
-
 
     const displayProjectColors = () => {
         if (!projectColors) return <div></div>
@@ -33,7 +30,6 @@ const ProjectColors = () => {
             const style = {
                 backgroundColor: color
             }
-
             const theClassName = "ProjectColors__color";
 
             return (
@@ -42,11 +38,11 @@ const ProjectColors = () => {
                     className={theClassName}
                     style={style}
                     onClick={() => handleOnClick(color, itt)}
-                // onMouseEnter={()=>handleMouseEnter(itt)}
                 />
             )
         })
     }
+
     return (
         <div className="ProjectColors">
             <h3>Project Colors</h3>

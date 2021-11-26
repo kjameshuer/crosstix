@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './GridTools.scss';
-import {setSelectedTool} from './gridToolsSlice';
+import {setSelectedTool} from '../../../../app/slices/gridToolsSlice';
 
 const GridTools = () =>{
 

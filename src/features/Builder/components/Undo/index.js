@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { undoHistory } from 'features/Builder/components/GridContainer/gridSlice';
+import { undoHistory } from 'app/slices/gridSlice';
 
 const Undo = () => {
     const {history, historyPosition} = useSelector(state => state.gridInfo);

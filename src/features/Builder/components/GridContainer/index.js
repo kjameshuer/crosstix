@@ -1,8 +1,8 @@
 import React from 'react';
 import Cell from '../Cell';
 import { useSelector, useDispatch } from 'react-redux';
-import { toggleIsMouseDown } from './gridSlice';
-import { baseNumberLetter, backgroundColor } from 'app/constants';
+import { toggleIsMouseDown } from '../../../../app/slices/gridSlice';
+import { baseNumberLetter } from 'app/constants';
 import './GridContainer.scss'
 
 const GridContainer = () => {
@@ -26,11 +26,6 @@ const GridContainer = () => {
 
                 const key = `${currentLetter}${rowNum}`
                 const square = grid[key];
-                // const column = square ? square.column : currentLetter;
-                // const row = square ? square.row : rowNum;
-                // const color = square ? square.color : "#ffffff"
-                
-                // const {column, row, color} = grid[key];
                 
                 sortedRow.push(<Cell               
                     keyForCell={key} 
@@ -51,7 +46,7 @@ const GridContainer = () => {
 
     return (
      
-    <div className="GridContainer" onMouseDown={handleOnMouseDown} onMouseUp={handleOnMouseUp} onMouseExit={handleOnMouseExit}>
+    <div className="GridContainer" onMouseDown={handleOnMouseDown} onMouseUp={handleOnMouseUp} onMouseLeave={handleOnMouseExit}>
         {displaySortedGrid()}
     </div>
        

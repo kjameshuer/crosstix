@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import ProjectList from './components/ProjectList/';
 import { useDispatch } from 'react-redux';
-import { clearActiveProject } from 'projectSlice';
+import { clearActiveProject } from 'app/slices/projectSlice';
 import './Dashboard.scss'
 
 const Dashboard = () => {

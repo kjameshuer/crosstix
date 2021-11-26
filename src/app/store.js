@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
-import authReducer from 'authSlice'
-import gridReducer from 'features/Builder/components/GridContainer/gridSlice';
-import gridToolsReducer from 'features/Builder/components/GridTools/gridToolsSlice'
-import colorSelectorReducer from 'features/Builder/components/ColorSelector/colorSelectorSlice'
-import projectsReducer from 'projectSlice';
+import authReducer from 'app/slices/authSlice'
+import gridReducer from 'app/slices/gridSlice';
+import gridToolsReducer from 'app/slices/gridToolsSlice'
+import colorSelectorReducer from 'app/slices/colorSelectorSlice'
+import projectsReducer from 'app/slices/projectSlice';
 import reduxThunk from 'redux-thunk'
 
 export const store = configureStore({

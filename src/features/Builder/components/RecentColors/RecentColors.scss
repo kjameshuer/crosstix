@@ -1,10 +1,10 @@
 .RecentColors{
-    width: 150px;
     padding: 0px 10px 10px 10px;
+    width: 150px;
     h3{
+    font-size: 1rem;
       
     margin-top: 0;
-    font-size: 1rem;
 
     }
 }
@@ -19,10 +19,10 @@
 }
 
 .RecentColors__color{
-    height: 30px;
-    width: 30px;
-    margin-right: 2px;
-    border-radius: 5px;
-    margin-top: 2px;
     border: 1px dashed #545050;
+    border-radius: 5px;
+    height: 30px;
+    margin-right: 2px;
+    margin-top: 2px;
+    width: 30px;
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './CreateTile.scss'
 import { useDispatch } from 'react-redux';
-import { newProject } from 'projectSlice';
+import { newProject } from 'app/slices/projectSlice';
 
 
 const CreateTile = () => {
