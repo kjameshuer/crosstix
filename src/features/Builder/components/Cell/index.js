@@ -1,21 +1,17 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateGrid, updateHistory } from 'features/Builder/components/GridContainer/gridSlice';
-import { setSelectedColor } from 'features/Builder/components/ColorSelector/colorSelectorSlice'
-import { setSelectedTool } from 'features/Builder/components/GridTools/gridToolsSlice'
+import { updateGrid, updateHistory } from 'app/slices/gridSlice';
+import { setSelectedColor } from 'app/slices/colorSelectorSlice'
+import { setSelectedTool } from 'app/slices/gridToolsSlice'
 import './Cell.scss';
 import { cellColor } from 'app/constants';
 
 
-const Cell = ({ color, column, row, keyForCell }) => {
+const Cell = ({ column, row, keyForCell }) => {
     const dispatch = useDispatch();
     const { grid, isMouseDown } = useSelector(state => state.gridInfo);
     const { selectedColor } = useSelector(state => state.colorInfo);
     const { selectedTool } = useSelector(state => state.gridTools);
-
-    const styles = {
-        'backgroundColor': color
-    }
 
     const handleClick = () => {
         if (selectedTool === 'Write') {
@@ -45,20 +41,14 @@ const Cell = ({ color, column, row, keyForCell }) => {
         }
     }
 
-    // const handleMouseEnter = (col, row) => {
-    //     updateMousePosition([`${col}`,`${row}`]);
-    // }
     const gridFill = (grid.hasOwnProperty(`${column}${row}`)) ? grid[`${column}${row}`].color : '#ffffff'
-
     const style = { backgroundColor: gridFill }
-    const fontStyle = { color: gridFill }
+    
     return (
         <div key={keyForCell} style={style} className="Cell" onMouseDown={handleClick} onMouseEnter={() => handleMouseEnter(column, row, selectedColor)}>
-            {/* <span style={fontStyle} className="Cell__x">x</span> */}
+
         </div>
     )
 }
-
-
 
 export default Cell;

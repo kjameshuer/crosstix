@@ -1,21 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, {  useEffect } from 'react';
 import ProjectTile from '../ProjectTile';
 import CreateTile from '../CreateTile';
 import './ProjectList.scss';
-import { getProjects, deleteProject } from 'projectSlice';
+import { getProjects, deleteProject } from 'app/slices/projectSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const ProjectList = () => {
 
     const dispatch = useDispatch();
-    const [isModalActive, setModalActive] = useState(false)
     const projects = useSelector(state => state.projectsInfo.projects);
     
     useEffect(() => {
         if (projects.length <= 0) {
             dispatch(getProjects());
         }
-    }, [])
+    }, [projects, dispatch])
 
     const handleDeleteProject = id => {
         dispatch(deleteProject(id))

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProject, clearActiveProject, saveProject } from 'projectSlice';
+import { getProject, saveProject } from 'app/slices/projectSlice';
 import ProjectColors from './components/ProjectColors';
 import RecentColors from './components/RecentColors';
 import GridTools from './components/GridTools';
@@ -13,18 +13,15 @@ import './Builder.scss';
 const Builder = props => {
   const projectId = props.match.params.id;
   const dispatch = useDispatch();
-  const projectsInfo = useSelector(state => state.projectsInfo)
-  const [mousePosition, updateMousePosition] = useState(['A', '1'])
-  const [historyPosition, setHistoryPosition] = useState(0);
+  const projectsInfo = useSelector(state => state.projectsInfo);
 
   useEffect(() => {
-    dispatch(getProject(projectId))
-
-  }, [])
+    dispatch(getProject(projectId));
+  }, [dispatch, projectId])
 
 
   const handleSave = () => {
-    dispatch(saveProject())
+    dispatch(saveProject());
   }
 
   const showBuilder = () => {

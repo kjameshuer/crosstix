@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Builder from './features/Builder'
 import Home from 'pages/Home';
 import SignIn from 'pages/SignIn';
@@ -15,7 +15,6 @@ import Profile from 'pages/Profile';
 
 
 function App() {
-
 
   useEffect(() => {
 
