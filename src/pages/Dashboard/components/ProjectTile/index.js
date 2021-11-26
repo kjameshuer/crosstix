@@ -1,17 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './ProjectTile.scss';
 
+const ProjectTile = ({ project, handleDeleteProject }) => {
+   
+    const [isConfirmShowing, setConfirmShowing] = useState(false);
 
-const ProjectTile = ({ project }) => {
-    console.log("project", project)
     const { title, _id } = project;
+    const handleDelete = e => {
+        e.stopPropagation();
+        e.preventDefault();
+        setConfirmShowing(true);
+    }
+
+    const handleYesClick = e => {
+        e.stopPropagation();
+        e.preventDefault();
+        handleDeleteProject(_id);
+        setConfirmShowing(false);
+    }
+
+    const handleNoClick = e => {
+        e.stopPropagation();
+        e.preventDefault();
+        setConfirmShowing(false);
+    }
+
     return (
-        <Link to={`/builder/${_id}`} >
-            <div className="ProjectTile">
+        <div className="ProjectTile">
+            <Link to={`/builder/${_id}`} >
                 <h3 className="ProjectTile__title">{title}</h3>
-            </div>
-        </Link>
+            </Link>
+            <button className="ProjectTile__button" onClick={handleDelete}>Delete</button>
+            {isConfirmShowing && (
+            <>
+                <p>Are you sure?</p>
+                <div>
+                    <button onClick={handleYesClick}>Yes</button>
+                    <button onClick={handleNoClick}>No</button>
+                </div>
+            </>
+            )}
+        </div>   
     )
 }
 

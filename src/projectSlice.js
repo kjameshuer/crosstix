@@ -82,7 +82,7 @@ export const saveProject = createAsyncThunk(
             grid: colorTiles,
             projectId: projectsInfo.activeProject.projectId
         }
-        console.log("UPDATED PROJECT", updatedProject)
+
         const response = await axios.post('/api/project/save',
             updatedProject,
             {
@@ -91,6 +91,20 @@ export const saveProject = createAsyncThunk(
                 }
             })
         return response.data;
+    }
+)
+
+export const deleteProject = createAsyncThunk(
+    'projects/delete',
+    async (id) => {
+        const response = await axios.post('/api/project/delete',
+            {id: id},
+            {
+                headers: {
+                    'Authorization': localStorage.getItem('crosstixToken')
+                }  
+            })
+        return response.data;    
     }
 )
 
@@ -119,24 +133,25 @@ export const projectSlice = createSlice({
             state.projects = action.payload
         })
         builder.addCase(getProject.fulfilled, (state, action) => {
-            console.log("ACTION>PAY>OAYD", action.payload)
-            const { project, gridData } = action.payload;
+            const { project } = action.payload;
             const {title, projectColors, rows, columns, gridId, _id} = project;
-            console.log("title", title)
-            
-            
             state.activeProject = {projectColors, title, rows, columns, gridId, projectId: _id};
-            state.hasActiveProject = true;
-          
-            
+            state.hasActiveProject = true;       
         })
         builder.addCase(newProject.fulfilled, (state, action) => {
-            console.log("the action???", action.payload)
             state.projects.push(action.payload);
         })
         builder.addCase(saveProject.fulfilled, (state, action) => {
 
             //    state.activeProject = action.payload;
+        })
+        builder.addCase(deleteProject.fulfilled, (state, action) => { 
+            console.log('still happenin')   
+            const newProjectsList = state.projects.filter(project => {
+             return project._id !== action.payload.id;
+            })
+            state.projects = newProjectsList;
+
         })
     },
 })

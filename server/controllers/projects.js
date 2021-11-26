@@ -44,11 +44,10 @@ exports.getProject = function (req, res, next) {
         const readStream = gridFSBucket.openDownloadStreamByName(`projectGrid-${projectId}.txt`)
             
         readStream.on('data', (chunk) => {
-            gridBuffer = Buffer.concat([gridBuffer, chunk])
+            gridBuffer = Buffer.concat([gridBuffer, chunk]);
         })
     
         readStream.on('error', (error)=>{
-            console.log("Some error occurred in download:" + error);
             return res.send(error);
         })
     
@@ -57,19 +56,18 @@ exports.getProject = function (req, res, next) {
             console.log("done downloading: ", gridData);    
             // clean up memory
             gridBuffer = null; 
-            readStream.destroy();
-            console.log("project data: ", {project, gridData})    
+            readStream.destroy();  
             return res.status(200).send({project, gridData});
-        });
-
- 
-
-      
-    })
-
-    
+        });      
+    })      
 }
-
+exports.deleteProject = function (req,res,next){
+    console.log("delete project", req.body)
+    Project.deleteOne({_id: req.body.id}, function (err){
+        if (err) {return next(err)}
+        return res.status(200).send({status: 'ok', id:req.body.id})
+    })
+}
 exports.saveProject = function (req, res, next) {
     console.log("request", req.body)
     const projectColors = req.body.projectColors;
