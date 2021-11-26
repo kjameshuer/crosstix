@@ -1,5 +1,9 @@
 const Project = require('../models/project');
-const GridRow = require('../models/gridRow');
+const mongoose = require('mongoose');
+var stream = require('stream');
+
+const GRIDFS_CHUNK_SIZE = 1024
+const GRIDFS_BUCKET_NAME = 'gridBucket'
 
 exports.newProject = function (req, res, next) {
     const project = new Project();
@@ -19,55 +23,92 @@ exports.getProjects = function (req, res, next) {
         if (existingProjects.length === 0) {
             return res.status(200).send([])
         }
-
         return res.status(200).send(existingProjects)
     });
 }
 
 exports.getProject = function (req, res, next) {
-
     const projectId = req.query.projectId;
     Project.findOne({ _id: projectId }, function (err, project) {
         if (err) { return next(err); }
-        console.log("project", project)
-        return res.status(200).send(project);
+
+        const gridFSBucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db,{
+            chunkSizeBytes: GRIDFS_CHUNK_SIZE,
+            bucketName: GRIDFS_BUCKET_NAME
+        });
+        
+        if (!project.gridId) return res.status(200).send({project, gridData:{}}) 
+
+        let gridBuffer = new Buffer('');
+    
+        const readStream = gridFSBucket.openDownloadStreamByName(`projectGrid-${projectId}.txt`)
+            
+        readStream.on('data', (chunk) => {
+            gridBuffer = Buffer.concat([gridBuffer, chunk])
+        })
+    
+        readStream.on('error', (error)=>{
+            console.log("Some error occurred in download:" + error);
+            return res.send(error);
+        })
+    
+        readStream.on('end', ()=>{
+            const gridData = JSON.parse(gridBuffer.toString());
+            console.log("done downloading: ", gridData);    
+            // clean up memory
+            gridBuffer = null; 
+            readStream.destroy();
+            console.log("project data: ", {project, gridData})    
+            return res.status(200).send({project, gridData});
+        });
+
+ 
+
+      
     })
+
+    
 }
 
 exports.saveProject = function (req, res, next) {
     console.log("request", req.body)
     const projectColors = req.body.projectColors;
-    Project.findOneAndUpdate({ _id: req.body._id }, { projectColors: projectColors }, null, function (err, project) {
-        if (err) { return next(err) }
-        return res.status(200).send(project);
+    const rows = req.body.rows;
+    const columns = req.body.columns;
+    const projectId = req.body.projectId;
+    const grid = req.body.grid;
+
+    const gridFSBucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db,{
+        chunkSizeBytes: GRIDFS_CHUNK_SIZE,
+        bucketName: GRIDFS_BUCKET_NAME
+    });
+
+    const gridDataStream = new stream.Readable();
+    gridDataStream.push(JSON.stringify(grid));
+    gridDataStream.push(null); // Push null to end stream
+
+    gridDataStream.pipe(gridFSBucket.openUploadStream(`projectGrid-${projectId}.txt`))
+    .on('error', (error)=>{
+        console.log("GridFS upload error:"+ error);
+        return res.send(error);
     })
-
-    // const grid = req.body.grid;
-    // const cols = req.body.cols;
-    // const rows = req.body.rows;
-
-    // for(let row = 1; row < rows; row++) {
-    //     let columnLetter = '';
-    //     if (col + baseNumberLetter > 90) {
-    //         // double letter
-    //         const firstLetter = String.fromCharCode((col / 26) - 1 + baseNumberLetter) 
-    //         const secondLetter = String.fromCharCode((col % 26) + baseNumberLetter)
-    //         columnLetter = `${firstLetter}${secondLetter}`;
-    //     } else {
-    //         // single letter
-    //         columnLetter = String.fromCharCode(col + baseNumberLetter);
-    //     }
+    .on('finish', (data)=>{
+        console.log("done uploading: ", data);
         
-    //     const key = `${columnLetter}${row}`
-    //     griddy[key] = {
-    //         color: cellColor,
-    //         column: columnLetter,
-    //         row
-    //     }
-    // }
-
-    // GridRow
+        Project.findOneAndUpdate(
+            { _id: projectId }, 
+            { $set: {
+                recentDate: Date.now(), 
+                projectColors: projectColors, 
+                rows: rows, 
+                columns: columns,
+                gridId: data._id 
+            }}, 
+            null, 
+            function (err, project) {
+                if (err) { return next(err) }
+                return res.status(200).send(project);
+            }
+        )
+    });
 }
-
-//get project/s
-//save project

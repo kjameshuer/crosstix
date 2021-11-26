@@ -15,49 +15,42 @@ const Builder = props => {
   const dispatch = useDispatch();
   const projectsInfo = useSelector(state => state.projectsInfo)
   const [mousePosition, updateMousePosition] = useState(['A', '1'])
-  const [toolModalIsOpen, setToolModalIsOpen] = useState(true)
   const [historyPosition, setHistoryPosition] = useState(0);
 
   useEffect(() => {
     dispatch(getProject(projectId))
 
-  }, [projectsInfo.hasActiveProject])
+  }, [])
 
-
-  const handleToolToggleClick = () => {
-    setToolModalIsOpen(!toolModalIsOpen);
-  }
 
   const handleSave = () => {
     dispatch(saveProject())
   }
 
   const showBuilder = () => {
-    const { title } = projectsInfo;
+
+    const title = projectsInfo.activeProject.title
     return (
-      <>
-        {projectsInfo.hasActiveProject && <>
+      <>       
           <div className="Builder__header">
-              <h3>{title}</h3>
+              {title && <h3>{title}</h3>}
               <GridTools />
               <div>
               <Undo />
               <Redo />
               </div>
-              <button onClick={handleSave}>Save</button>
-              
+              <button onClick={handleSave}>Save</button>              
             </div>           
-          <div className="Builder__work-area">
-          
+          <div className="Builder__work-area">          
             <GridContainer />
           </div>
-          <div className={(toolModalIsOpen) ? `Builder__tool-area Builder__tool-area--open` : `Builder__tool-area`}>
+          <div className={`Builder__tool-area Builder__tool-area--open`}>
             <div className="Builder__tool-container"> 
               <ProjectColors />
               <ColorSelector />
               <RecentColors />                    
             </div>
-          </div></>}
+          </div>
       </>
     )
   }
@@ -65,7 +58,7 @@ const Builder = props => {
   return (
     <>
       {!projectsInfo && <h3>Getting project</h3>}
-      {projectsInfo && showBuilder()}
+      {projectsInfo.activeProject && showBuilder()}
 
     </>
   )

@@ -38,6 +38,9 @@ export const gridSlice = createSlice({
       // state.grid[`${action.payload.column}${action.payload.row}`] = action.payload.color;
       state.grid[`${column}${row}`].color = color
     },
+    setGrid: (state, action) => {
+      state.grid = {...state.grid, ...action.payload};
+    },
     updateHistory: (state, action) => {
       state.history.push(action.payload);
       state.historyPosition++;
@@ -61,7 +64,7 @@ export const gridSlice = createSlice({
   extraReducers: {},
 });
 
-export const { updateGrid, updateHistory, toggleIsMouseDown, undoHistory, redoHistory } = gridSlice.actions;
+export const { updateGrid, setGrid, updateHistory, toggleIsMouseDown, undoHistory, redoHistory } = gridSlice.actions;
 
 // // The function below is called a selector and allows us to select a value from
 // // the state. Selectors can also be defined inline where they're used instead of

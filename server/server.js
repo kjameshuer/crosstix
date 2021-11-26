@@ -1,6 +1,5 @@
 const express = require('express')
 const http = require('http')
-const bodyParser = require('body-parser')
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const router = require('./router');
@@ -13,7 +12,7 @@ mongoose.connect(uri);
 
 const app = express()
 app.use(morgan('combined'));
-app.use(bodyParser.json({ type: '*/*' }))
+app.use(express.json({ type: '*/*', limit: '50mb' }))
 app.use(cors())
 app.use(passport.initialize());
 router(app);

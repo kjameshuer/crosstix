@@ -1,13 +1,20 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { gridState } from 'features/Builder/components/GridContainer/gridSlice'
+import { useDispatch } from 'react-redux';
+
+import { setGrid } from 'features/Builder/components/GridContainer/gridSlice'
+
 import axios from 'axios';
+import _ from 'underscore';
 
 const initialState = {
     projects: [],
     hasActiveProject: false,
     activeProject: {
         projectColors: [],
-        title: ''
+        title: '',
+        rows: 50,
+        columns: 50,
+        projectId: null
     }
 }
 
@@ -26,7 +33,7 @@ export const getProjects = createAsyncThunk(
 )
 export const getProject = createAsyncThunk(
     'projects/getOne',
-    async id => {
+    async (id, thunkAPI) => {
         console.log("Sending id", id)
         const response = await axios.get('/api/project', {
             params: {
@@ -37,7 +44,8 @@ export const getProject = createAsyncThunk(
             }
         })
         console.log("get one project", response);
-        return response.data;
+        thunkAPI.dispatch(setGrid(response.data.gridData))
+        return response.data
     }
 )
 export const newProject = createAsyncThunk(
@@ -60,12 +68,21 @@ export const saveProject = createAsyncThunk(
     'projects/save',
     async (info, thunkAPI) => {
         const { gridInfo, projectsInfo } = thunkAPI.getState()
-        console.log("getstate", gridInfo, projectsInfo)
-        const updatedProject = {
-            ...projectsInfo.activeProject,
-            projectColors: projectsInfo.projectColors,
-            grid: JSON.stringify(gridInfo.grid)
+     
+        const colorTiles = Object.fromEntries(
+            Object.entries(gridInfo.grid).filter(
+                ([key, value]) => value['color'] !== '#ffffff' 
+            )
+        )
+        
+        const updatedProject = {            
+            projectColors: projectsInfo.activeProject.projectColors,
+            rows: projectsInfo.activeProject.rows,
+            columns: projectsInfo.activeProject.columns,
+            grid: colorTiles,
+            projectId: projectsInfo.activeProject.projectId
         }
+        console.log("UPDATED PROJECT", updatedProject)
         const response = await axios.post('/api/project/save',
             updatedProject,
             {
@@ -89,7 +106,7 @@ export const projectSlice = createSlice({
             state.hasActiveProject = false;
         },
         addToProjectColors: (state, action) => {
-            const newList = (state.activeProject.projectColors.length > 9) ? state.activeProject.projectColors.slice(1) : state.projectColors;
+            const newList = (state.activeProject.projectColors.length > 9) ? state.activeProject.projectColors.slice(1) : state.activeProject.projectColors;
             newList.push(action.payload)
             state.activeProject.projectColors = newList;
         },
@@ -102,14 +119,19 @@ export const projectSlice = createSlice({
             state.projects = action.payload
         })
         builder.addCase(getProject.fulfilled, (state, action) => {
-
-            const { title, projectColors } = action.payload;
-            state.title = title;
-            state.projectColors = projectColors;
-            state.activeProject = action.payload;
+            console.log("ACTION>PAY>OAYD", action.payload)
+            const { project, gridData } = action.payload;
+            const {title, projectColors, rows, columns, gridId, _id} = project;
+            console.log("title", title)
+            
+            
+            state.activeProject = {projectColors, title, rows, columns, gridId, projectId: _id};
             state.hasActiveProject = true;
+          
+            
         })
         builder.addCase(newProject.fulfilled, (state, action) => {
+            console.log("the action???", action.payload)
             state.projects.push(action.payload);
         })
         builder.addCase(saveProject.fulfilled, (state, action) => {
