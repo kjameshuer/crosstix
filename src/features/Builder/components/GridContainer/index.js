@@ -25,14 +25,19 @@ const GridContainer = () => {
                 }
 
                 const key = `${currentLetter}${rowNum}`
-                const {column, row, color} = grid[key];
+                const square = grid[key];
+                // const column = square ? square.column : currentLetter;
+                // const row = square ? square.row : rowNum;
+                // const color = square ? square.color : "#ffffff"
+                
+                // const {column, row, color} = grid[key];
                 
                 sortedRow.push(<Cell               
                     keyForCell={key} 
                     key={key}    
-                    color={color}
-                    column={column}                  
-                    row={row}                    
+                    color={ square ? square.color : "#ffffff"}
+                    column={square ? square.column : currentLetter}                  
+                    row={square ? square.row : rowNum}                    
               />);
             }
             sortedGrid.push(sortedRow)
